@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const Button = (props) => <StyledButton {...props} />;
 
+
+
 const StyledButton = styled.button`
 	height: 2.8rem;
 	border-radius: 0.5rem;
