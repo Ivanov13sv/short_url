@@ -18,14 +18,18 @@ export const GlobalStyles = createGlobalStyle`
 
 export const lightTheme = {
 	colorBg: '#e4e5e7',
-	colorTextMain: '#2f3237',
-    colorTextSecondary: '#2f3337',
-	colorUi: '##d9d9d9',
+	colorTextMain: '#e4e5e7',
+	colorUi: '#45484e',
+    colorElem: '#119797',
+    colorTitle: '#e4e5e7',
+    colorLink: '#ffd400'
 };
 
 export const darkTheme = {
 	colorBg: '#2f3237',
 	colorTextMain: '#2f3337',
-    colorTextSecondary: '#e4e5e7',
 	colorUi: '#d9d9d9',
+    colorElem: 'teal',
+    colorTitle: 'teal',
+    colorLink: '#0066ff'
 };

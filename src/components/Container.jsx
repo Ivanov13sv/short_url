@@ -5,7 +5,7 @@ export const Container = styled.div`
 	margin: 0 auto;
 	padding: 0 1rem;
 	@media (min-width: 680px){
-		padding: 0 2rem;
+		/* padding: 0 2rem; */
 
 	}
 `;

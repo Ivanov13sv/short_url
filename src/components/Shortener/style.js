@@ -1,12 +1,13 @@
-import styled, {keyframes} from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Button } from '../UI/Button';
 
 export const Title = styled.h1`
+	user-select: none;
 	text-align: center;
 	font-weight: var(--fw-normal);
 	font-size: var(--fs-subtitle);
 	/* color: ${({ theme }) => theme.colorTextMain}; */
-	color: #026868;
+	color: ${({theme}) => theme.colorTitle};
 	margin: 0 0 1rem 0;
 	@media (min-width: 680px) {
 		font-size: var(--fs-title);
@@ -76,7 +77,7 @@ const pulsing = keyframes`
 75%{
 	box-shadow: #ff69b400 0 0 0 .7rem;
 }
-`
+`;
 const errorPulsing = keyframes`
 0%{
 	box-shadow: #b39c3a 0 0 0 0;
@@ -84,27 +85,26 @@ const errorPulsing = keyframes`
 75%{
 	box-shadow: #b39c3a00 0 0 0 1rem;
 }
-`
+`;
 
 export const Circle = styled.div`
-height: 24px;
-width: 24px;
-border-radius: 50%;
-background-color: #ff69b4;
-animation: ${pulsing} 1500ms infinite; 
-`
+	height: 24px;
+	width: 24px;
+	border-radius: 50%;
+	background-color: #ff69b4;
+	animation: ${pulsing} 1500ms infinite;
+`;
 
 export const PulsingBtn = styled(Button)`
-animation: ${pulsing} 1500ms infinite; 
-`
+	animation: ${pulsing} 1500ms infinite;
+`;
 export const ErrorBtn = styled(Button)`
-animation: ${errorPulsing} 1500ms infinite; 
-`
+	animation: ${errorPulsing} 1500ms infinite;
+`;
 
 export const ErrorMessage = styled.div`
-color: #ff0000;
-position: fixed;
-top: 3.1rem;
-right: 30px;
-`
-
+	color: #ff0000;
+	position: fixed;
+	top: 3.1rem;
+	right: 30px;
+`;

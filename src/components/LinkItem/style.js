@@ -27,7 +27,7 @@ span {
 
 a {
     text-decoration: none;
-    color: blue;
+    color: ${({theme}) => theme.colorLink};
     cursor: pointer;
 
 }

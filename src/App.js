@@ -3,19 +3,18 @@ import { ThemeProvider } from 'styled-components';
 import { useThemeChanger } from './hooks/useThemeChanger';
 import { GlobalStyles, lightTheme, darkTheme } from './globalStyles';
 import { Shortener } from './components/Shortener';
+import { Toggler } from './components/UI/Toggler';
 
 function App() {
 	const [theme, toggleTheme] = useThemeChanger();
 	const themeMode = theme === 'light' ? lightTheme : darkTheme;
 
 	return (
-		<ThemeProvider theme={darkTheme}>
-						
-			<Wrapper>
-
+		<ThemeProvider theme={themeMode}>
+			{/* <Wrapper> */}
+				<Toggler theme={theme} toggleTheme={toggleTheme} />
 				<Shortener />
-			</Wrapper>
-			
+			{/* </Wrapper> */}
 			<GlobalStyles />
 		</ThemeProvider>
 	);
@@ -24,9 +23,5 @@ function App() {
 export default App;
 
 const Wrapper = styled.div`
-	height: 100vh;
-	/* display: flex; */
-	/* align-items: center; */
-	/* justify-content: center; */
-	/* flex-direction: column; */
+	position: relative;
 `;

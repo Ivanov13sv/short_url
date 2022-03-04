@@ -1,34 +1,32 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
-export const useFetch = async (url) => {
-	const [shortUrl, setShortUrl] = useState(null);
-	const [isLoading, setIsLoading] = useState('');
-	const [errorMessage, setErrorMessage] = useState(false);
+import { useState } from 'react';
+export const useFetch = (input) => {
+	const [url, setUrl] = useState('');
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(false);
 	const [apiError, setApiError] = useState(false);
 
-	const regex =
-		/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
-	if (url.match(regex)) {
-		setIsLoading(true);
-		axios(`https://api.shrtco.de/v2/shorten?url=${url}`)
+	const fetching = () => {
+		const regex =
+			/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
+
+		setLoading(true);
+		axios(`https://api.shrtco.de/v2/shorten?url=${input}`)
 			.then(({ data }) => {
 				const newShortUrl = {
 					id: data.result.code,
 					full_link: data.result.original_link,
 					short_link: data.result.short_link,
 				};
-				setShortUrl(newShortUrl);
-
-				setErrorMessage(false);
+				setUrl(newShortUrl);
+				setError(false);
 				setApiError(false);
 			})
 			.catch(() => {
 				setApiError(true);
 			})
-			.finally(() => setIsLoading(false));
-	} else {
-		setErrorMessage(true);
-	}
+			.finally(() => setLoading(false));
+	};
 
-	return { shortUrl, isLoading, errorMessage, apiError };
+	return [fetching, url, loading, error, apiError];
 };

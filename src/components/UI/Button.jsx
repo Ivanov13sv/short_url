@@ -9,11 +9,11 @@ const StyledButton = styled.button`
 	border-radius: 0.5rem;
 	border: none;
 	padding: 0 1rem;
-	background: #026868;
+	background: ${({theme}) => theme.colorElem};
 	font-size: var(--fs-sm);
 	font-weight: var(--fw-light);
 	letter-spacing: 0.08rem;
-	color: ${({ theme }) => theme.colorTextSecondary};
+	color: #e4e5e7;
 	width: 100%;
 	transition: background-color .1s;
 	cursor: pointer;

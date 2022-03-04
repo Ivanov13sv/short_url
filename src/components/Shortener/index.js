@@ -5,6 +5,7 @@ import { Button } from '../UI/Button';
 import { LinkItem } from '../LinkItem';
 import { ApiError } from '../UI/ApiError';
 import axios from 'axios';
+
 import {
 	ShortenerWrapper,
 	Title,
@@ -14,22 +15,27 @@ import {
 	ErrorBtn,
 } from './style';
 
+
 export const Shortener = ({ theme, toggleTheme }) => {
+
 	const [input, setInput] = useState('');
-	const [shortLinks, setShortLinks] = useState(() =>{
+	const [shortLinks, setShortLinks] = useState(() => {
 		const savedUrls = localStorage.getItem('shortUrls');
-		return savedUrls? JSON.parse(savedUrls) : [];
+		return savedUrls ? JSON.parse(savedUrls) : [];
 	});
-	const [errorMessage, setErrorMessage] = useState(false);
+
+	const [isError, setIsError] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [apiError, setApiError] = useState(false);
 
+
+
 	useEffect(() => {
 		const timer = setTimeout(() => {
-			setErrorMessage(false);
+			setIsError(false);
 		}, 1000);
 		return () => clearTimeout(timer);
-	}, [errorMessage]);
+	}, [isError]);
 
 	useEffect(() => {
 		localStorage.setItem('shortUrls', JSON.stringify(shortLinks));
@@ -42,6 +48,7 @@ export const Shortener = ({ theme, toggleTheme }) => {
 	const deleteUrl = (id) => {
 		setShortLinks(shortLinks.filter((item) => item.id !== id));
 	};
+
 
 	const getShorUrl = (e) => {
 		e.preventDefault();
@@ -60,7 +67,7 @@ export const Shortener = ({ theme, toggleTheme }) => {
 						short_link: data.result.short_link,
 					};
 					!uniqUrl && setShortLinks([...shortLinks, newShortUrl]);
-					setErrorMessage(false);
+					setIsError(false);
 					setApiError(false);
 				})
 				.catch(() => {
@@ -69,7 +76,7 @@ export const Shortener = ({ theme, toggleTheme }) => {
 				.finally(() => setIsLoading(false));
 			setInput('');
 		} else {
-			setErrorMessage(true);
+			setIsError(true);
 		}
 	};
 
@@ -77,7 +84,7 @@ export const Shortener = ({ theme, toggleTheme }) => {
 		if (isLoading) {
 			return <PulsingBtn children='Loading' />;
 		}
-		if (errorMessage) {
+		if (isError) {
 			return <ErrorBtn children='Wrong URL' />;
 		}
 		return <Button children='Shorten' />;
@@ -88,7 +95,9 @@ export const Shortener = ({ theme, toggleTheme }) => {
 	return (
 		<Container>
 			{apiError && <ApiError />}
-			<ShortenerWrapper onSubmit={getShorUrl}>
+			<ShortenerWrapper
+				onSubmit={getShorUrl}
+			>
 				<Title>Short URL</Title>
 				<ShortenerBody>
 					<Input
@@ -98,6 +107,7 @@ export const Shortener = ({ theme, toggleTheme }) => {
 					/>
 					{button}
 				</ShortenerBody>
+				
 			</ShortenerWrapper>
 			<LinksBlock>
 				{shortLinks.map((item) => (
