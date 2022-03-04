@@ -19,7 +19,7 @@ const StyledToggler = styled.label`
 	width: 60px;
 	height: 34px;
     border-radius: 1rem;
-
+	overflow: hidden;
 	input {
 		-webkit-appearance: none;
 		position: absolute;

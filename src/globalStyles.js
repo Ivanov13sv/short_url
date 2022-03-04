@@ -11,7 +11,7 @@ export const GlobalStyles = createGlobalStyle`
         background: ${({ theme }) => theme.colorBg};
         color: ${({ theme }) => theme.colorTextMain};
         font-family: var(--family);
-        transition: all .5s;
+        transition: background-color .3s;
 
     }
 `;

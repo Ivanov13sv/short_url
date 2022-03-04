@@ -16,7 +16,7 @@ const StyledInput = styled.input`
             background: #f3f3f3;
         }
         :focus{
-            border: 2px solid teal;
+            border: 2px solid ${({theme}) => theme.colorElem};
         }
 	}
 `;

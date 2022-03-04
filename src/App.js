@@ -11,17 +11,11 @@ function App() {
 
 	return (
 		<ThemeProvider theme={themeMode}>
-			{/* <Wrapper> */}
-				<Toggler theme={theme} toggleTheme={toggleTheme} />
-				<Shortener />
-			{/* </Wrapper> */}
+			<Toggler theme={theme} toggleTheme={toggleTheme} />
+			<Shortener />
 			<GlobalStyles />
 		</ThemeProvider>
 	);
 }
 
 export default App;
-
-const Wrapper = styled.div`
-	position: relative;
-`;

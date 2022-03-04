@@ -6,7 +6,7 @@ export const Title = styled.h1`
 	text-align: center;
 	font-weight: var(--fw-normal);
 	font-size: var(--fs-subtitle);
-	/* color: ${({ theme }) => theme.colorTextMain}; */
+	transition: color .3s;
 	color: ${({theme}) => theme.colorTitle};
 	margin: 0 0 1rem 0;
 	@media (min-width: 680px) {
@@ -19,7 +19,7 @@ export const ShortenerWrapper = styled.div`
 	margin: 6rem 0 2rem 0;
 	padding: 1rem;
 	border-radius: 1rem;
-	/* margin-bottom: 2rem; */
+	transition: background-color .3s;
 	@media (min-width: 680px) {
 		padding: 2rem;
 		margin-top: 14rem;
