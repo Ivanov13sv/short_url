@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { AiOutlineDelete } from 'react-icons/ai';
-import { Button} from '../UI/Button';
+import { FiTrash2 } from "react-icons/fi";
+import { Button } from '../UI/Button';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { StyledLink } from './style';
+import { StyledLink} from './style';
 import { PulsingBtn } from '../Shortener/style';
 
 export const LinkItem = ({ link, deleteUrl }) => {
@@ -21,7 +21,11 @@ export const LinkItem = ({ link, deleteUrl }) => {
 		return () => clearTimeout(timer);
 	}, [copied]);
 
-	const isCopied = copied? <PulsingBtn children='Copied!'/> : <Button onClick={() => setCopied(true)} children ='Copy'/>
+	const isCopied = copied ? (
+		<PulsingBtn children='Copied!' />
+	) : (
+		<Button onClick={() => setCopied(true)} children='Copy' />
+	);
 
 	return (
 		<StyledLink key={id}>
@@ -30,11 +34,11 @@ export const LinkItem = ({ link, deleteUrl }) => {
 				{short_link}
 			</a>
 			<div>
-				<CopyToClipboard text={short_link}>
-					{isCopied}
-				</CopyToClipboard>
-				<AiOutlineDelete onClick={() => deleteUrl(id)} />
+				<CopyToClipboard text={short_link}>{isCopied}</CopyToClipboard>
+				<FiTrash2 size={'1.4rem'} onClick={() => deleteUrl(id)} />
 			</div>
+
+
 		</StyledLink>
 	);
 };

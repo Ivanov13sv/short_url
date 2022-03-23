@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Container } from '../Container';
 import { Input } from '../UI/Input';
 import { Button } from '../UI/Button';
 import { LinkItem } from '../LinkItem';
 import { ApiError } from '../UI/ApiError';
-import axios from 'axios';
+import ShortenerService from '../API/ShortenerService';
+import { useFetching } from '../../hooks/useFetching';
+import { useInput } from '../../hooks/useInput';
 
 import {
 	ShortenerWrapper,
@@ -14,70 +16,35 @@ import {
 	PulsingBtn,
 	ErrorBtn,
 } from './style';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
-
-export const Shortener = ({ theme, toggleTheme }) => {
-
-	const [input, setInput] = useState('');
-	const [shortLinks, setShortLinks] = useState(() => {
-		const savedUrls = localStorage.getItem('shortUrls');
-		return savedUrls ? JSON.parse(savedUrls) : [];
-	});
-
-	const [isError, setIsError] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
-	const [apiError, setApiError] = useState(false);
-
-
-
-	useEffect(() => {
-		const timer = setTimeout(() => {
-			setIsError(false);
-		}, 1000);
-		return () => clearTimeout(timer);
-	}, [isError]);
-
-	useEffect(() => {
-		localStorage.setItem('shortUrls', JSON.stringify(shortLinks));
-	}, [shortLinks]);
-
-	const onChange = (e) => {
-		setInput(e.target.value.toLowerCase());
-	};
+export const Shortener = () => {
+	
+	const [input, onChange, setValue] = useInput();
+	const [shortLinks, setShortLinks] = useLocalStorage('shortUrls', [])
+	const [fetching, isLoading, isError, setIsError, apiError] = useFetching(
+		async () => {
+			const response = await ShortenerService.getShortUrl(input);
+			const newShortUrl = {
+				id: response.result.code,
+				full_link: response.result.original_link,
+				short_link: response.result.short_link,
+			};
+			const uniqUrl = shortLinks.some(
+				(item) => item.id === response.result.code
+			);
+			!uniqUrl && setShortLinks([...shortLinks, newShortUrl]);
+		}
+	);
 
 	const deleteUrl = (id) => {
 		setShortLinks(shortLinks.filter((item) => item.id !== id));
 	};
 
-
-	const getShorUrl = (e) => {
+	const getUrl = (e) => {
 		e.preventDefault();
-		const regex =
-			/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
-		if (input.match(regex)) {
-			setIsLoading(true);
-			axios(`https://api.shrtco.de/v2/shorten?url=${input}`)
-				.then(({ data }) => {
-					const uniqUrl = shortLinks.some(
-						(item) => item.id === data.result.code
-					);
-					const newShortUrl = {
-						id: data.result.code,
-						full_link: data.result.original_link,
-						short_link: data.result.short_link,
-					};
-					!uniqUrl && setShortLinks([...shortLinks, newShortUrl]);
-					setIsError(false);
-					setApiError(false);
-				})
-				.catch(() => {
-					setApiError(true);
-				})
-				.finally(() => setIsLoading(false));
-			setInput('');
-		} else {
-			setIsError(true);
-		}
+		fetching();
+		setValue('')
 	};
 
 	const btnStatus = () => {
@@ -92,22 +59,22 @@ export const Shortener = ({ theme, toggleTheme }) => {
 
 	const button = btnStatus();
 
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setIsError(false);
+		}, 1000);
+		return () => clearTimeout(timer);
+	}, [isError, setIsError]);
+
 	return (
 		<Container>
 			{apiError && <ApiError />}
-			<ShortenerWrapper
-				onSubmit={getShorUrl}
-			>
+			<ShortenerWrapper onSubmit={getUrl}>
 				<Title>Short URL</Title>
 				<ShortenerBody>
-					<Input
-						value={input}
-						onChange={onChange}
-						placeholder='example.com'
-					/>
+					<Input value={input} onChange={onChange} placeholder='example.com' />
 					{button}
 				</ShortenerBody>
-				
 			</ShortenerWrapper>
 			<LinksBlock>
 				{shortLinks.map((item) => (

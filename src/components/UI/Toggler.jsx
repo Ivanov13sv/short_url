@@ -1,11 +1,10 @@
-import { BsToggles } from 'react-icons/bs';
 import styled from 'styled-components';
 
 export const Toggler = ({ theme, toggleTheme }) => {
 	return (
 		<StyledToggler>
-			<input type='checkbox' checked={theme === 'dark' ? true: false}/>
-			<span onClick={() => toggleTheme(!theme)} />
+			<input onChange={() => toggleTheme(!theme)} type='checkbox' checked={theme === 'dark' ? true: false}/>
+			<span  />
 		</StyledToggler>
 	);
 };
@@ -27,7 +26,7 @@ const StyledToggler = styled.label`
 			transform: translateX(26px);
 		}
 		&:checked + span {
-			background-color: #c9c9c9;
+			background-color: #bbbbbb;
 		}
 	}
 	span {

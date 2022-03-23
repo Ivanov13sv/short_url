@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { ThemeProvider } from 'styled-components';
 import { useThemeChanger } from './hooks/useThemeChanger';
 import { GlobalStyles, lightTheme, darkTheme } from './globalStyles';

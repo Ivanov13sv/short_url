@@ -6,10 +6,10 @@ const appearance = keyframes`
 100%{
     scale(1);
 }
-`
+`;
 
 export const StyledLink = styled.li`
-    animation: 1s ${appearance} ;
+	animation: 1s ${appearance};
 	background: ${({ theme }) => theme.colorUi};
 	width: 100%;
 	list-style: none;
@@ -63,13 +63,13 @@ export const StyledLink = styled.li`
 					transform: rotate(0);
 				}
 				25% {
-					transform: rotate(-30deg);
+					transform: rotate(20deg);
 				}
 				50% {
 					transform: rotate(0);
 				}
 				75% {
-					transform: rotate(30deg);
+					transform: rotate(20deg);
 				}
 				100% {
 					transform: rotate(0);

@@ -4,14 +4,15 @@ export const useFetching = (callback) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
 	const [apiError, setApiError] = useState(false);
-	const [newLink, setNewLink] = useState('');
+
 
 	const fetching = async () => {
 		try {
 			setIsLoading(true);
 			setIsError(false)
-			const newLink = await callback();
-			setNewLink(newLink)
+			setApiError(false)
+			await callback();
+
 		} catch {
 			setApiError(true)
 		} finally {
@@ -19,5 +20,5 @@ export const useFetching = (callback) => {
 		}
 	};
 
-	return [fetching, isLoading, isError, setIsError, apiError, newLink];
+	return [fetching, isLoading, isError, setIsError, apiError];
 };
